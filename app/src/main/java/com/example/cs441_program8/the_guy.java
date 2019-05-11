@@ -17,18 +17,27 @@ import android.widget.Toast;
 
 public class the_guy {
     float x, y;
-    float width, height;
-    Bitmap bitmap1;
+    float width, height, center;
+    Bitmap bitmap1, up, down, left, right, action;
     Drawable d;
+    ImageView butt;
     int frameLength = 100;
     int lastChange = 0;
     int curFrame = 0;
     int numFrames = 2;
     boolean go = true;
 
-    public the_guy(Context context){
+    public the_guy(Context context, float centerX, float screenHeight){
         bitmap1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.test_boy) ;
-
+        up = BitmapFactory.decodeResource(context.getResources(), R.drawable.up_arrow);
+        down = BitmapFactory.decodeResource(context.getResources(), R.drawable.down_arrow);
+        left = BitmapFactory.decodeResource(context.getResources(), R.drawable.left_arrow);
+        right = BitmapFactory.decodeResource(context.getResources(), R.drawable.right_arrow);
+        action = BitmapFactory.decodeResource(context.getResources(), R.drawable.center_button);
+        center = centerX;
+        height = screenHeight;
+        butt =new ImageView(context);
+        butt.setImageBitmap(up);
     }
     public void update(String direction)
     {
@@ -46,14 +55,20 @@ public class the_guy {
         //canvas.drawBitmap(test, 256,256,null);
         //canvas.drawCircle(x, y, diameter, paint);
         canvas.drawBitmap(bitmap1, x, y, null);
+        canvas.drawBitmap(action, canvas.getWidth()/2, canvas.getHeight() - 400, null);
+        canvas.drawBitmap(up, canvas.getWidth()/2, canvas.getHeight() - action.getHeight(), null);
+        canvas.drawBitmap(down, canvas.getWidth()/2, canvas.getHeight() - 200, null);
+        canvas.drawBitmap(left, canvas.getWidth()/2 - 200, canvas.getHeight() - 400, null);
+        canvas.drawBitmap(right, canvas.getWidth()/2 + 200, canvas.getHeight() - 400, null);
+
         //d = new BitmapDrawable(bitmap1);
         //canvas.drawBitmap(test, 256,256,null);
     }
 
     public boolean onTouchEvent(MotionEvent e, Context c){
-        //if(e.getAction() == MotionEvent.ACTION_DOWN) {
+        if(e.getAction() == MotionEvent.ACTION_DOWN) {
 
-        //}
+        }
         return true;
     }
 }

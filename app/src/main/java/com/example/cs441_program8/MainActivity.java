@@ -51,14 +51,13 @@ public class MainActivity extends AppCompatActivity {
         int heightI = 1000;
         int widthI = 1000;
         int leftBound, topBound = 250;
-        final ImageView img = (ImageView) findViewById(R.id.the_guy);
+        //final ImageView img = (ImageView) findViewById(R.id.the_guy);
+
         //img.setFrame(2,2,2,2);
         float x,y=100;
         Bitmap background = BitmapFactory.decodeResource(this.getResources(), R.drawable.test_boy) ;
         float startX, startY, endX, endY = 100;
         boolean drawLine = false;
-
-        Button up;
 
         Matrix m = new Matrix();
         Rect rect = new Rect(100,100,300,300);
@@ -88,19 +87,12 @@ public class MainActivity extends AppCompatActivity {
             //paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(20);
             paint.setStyle(Paint.Style.STROKE);
-            up = new Button(getContext());
-            up.setText("hello");
-            up.setBackgroundColor(400);
-            up.setWidth(100);
-            up.setHeight(100);
         }
         @Override
         public void run(){
-            guy = new the_guy(this.getContext());
+            guy = new the_guy(this.getContext(), 400, 400);
             guy.x =100;
             guy.y =100;
-            up.setX(200);
-            up.setY(200);
 
             while(playing){
                 update();
