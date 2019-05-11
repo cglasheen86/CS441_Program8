@@ -18,7 +18,7 @@ import android.widget.Toast;
 public class the_guy {
     float x, y;
     float width, height, center;
-    Bitmap bitmap1, up, down, left, right, action;
+    Bitmap bitmap1;
     Drawable d;
     ImageView butt;
     int frameLength = 100;
@@ -29,22 +29,22 @@ public class the_guy {
 
     public the_guy(Context context, float centerX, float screenHeight){
         bitmap1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.test_boy) ;
-        up = BitmapFactory.decodeResource(context.getResources(), R.drawable.up_arrow);
-        down = BitmapFactory.decodeResource(context.getResources(), R.drawable.down_arrow);
-        left = BitmapFactory.decodeResource(context.getResources(), R.drawable.left_arrow);
-        right = BitmapFactory.decodeResource(context.getResources(), R.drawable.right_arrow);
-        action = BitmapFactory.decodeResource(context.getResources(), R.drawable.center_button);
-        center = centerX;
-        height = screenHeight;
-        butt =new ImageView(context);
-        butt.setImageBitmap(up);
+        //up = BitmapFactory.decodeResource(context.getResources(), R.drawable.up_arrow);
+        //down = BitmapFactory.decodeResource(context.getResources(), R.drawable.down_arrow);
+        //left = BitmapFactory.decodeResource(context.getResources(), R.drawable.left_arrow);
+        //right = BitmapFactory.decodeResource(context.getResources(), R.drawable.right_arrow);
+        //action = BitmapFactory.decodeResource(context.getResources(), R.drawable.center_button);
+        //center = centerX;
+        //height = screenHeight;
+        //butt =new ImageView(context);
+        //butt.setImageBitmap(up);
     }
     public void update(String direction)
     {
-        if(direction == "up") y--;
-        else if(direction == "down") y++;
-        else if(direction == "right") x++;
-        else if(direction == "left") x--;
+        if(direction == "up") y-=5;
+        else if(direction == "down") y+=5;
+        else if(direction == "right") x+=5;
+        else if(direction == "left") x-=5;
 
     }
 
@@ -55,11 +55,11 @@ public class the_guy {
         //canvas.drawBitmap(test, 256,256,null);
         //canvas.drawCircle(x, y, diameter, paint);
         canvas.drawBitmap(bitmap1, x, y, null);
-        canvas.drawBitmap(action, canvas.getWidth()/2, canvas.getHeight() - 400, null);
-        canvas.drawBitmap(up, canvas.getWidth()/2, canvas.getHeight() - action.getHeight(), null);
-        canvas.drawBitmap(down, canvas.getWidth()/2, canvas.getHeight() - 200, null);
-        canvas.drawBitmap(left, canvas.getWidth()/2 - 200, canvas.getHeight() - 400, null);
-        canvas.drawBitmap(right, canvas.getWidth()/2 + 200, canvas.getHeight() - 400, null);
+        //canvas.drawBitmap(action, canvas.getWidth()/2, canvas.getHeight() - 400, null);
+        //canvas.drawBitmap(up, canvas.getWidth()/2, canvas.getHeight() - action.getHeight(), null);
+        //canvas.drawBitmap(down, canvas.getWidth()/2, canvas.getHeight() - 200, null);
+        //canvas.drawBitmap(left, canvas.getWidth()/2 - 200, canvas.getHeight() - 400, null);
+        //canvas.drawBitmap(right, canvas.getWidth()/2 + 200, canvas.getHeight() - 400, null);
 
         //d = new BitmapDrawable(bitmap1);
         //canvas.drawBitmap(test, 256,256,null);

@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -33,25 +34,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //ConstraintLayout parent = (ConstraintLayout)findViewById(R.id.constraintLayout);
         myView = new MyView(this);
+        //parent.addView(myView,0);
         setContentView(myView);
 
 
     }
 
     class MyView extends SurfaceView implements Runnable{
+        Button butt = findViewById(R.id.button6);
         Thread gameThread = null;
         SurfaceHolder ourHolder;
         volatile boolean playing;
         boolean paused = false;
         Canvas canvas;
         Paint paint;
-        Bitmap bitmap;
+        Bitmap up, down, left, right, action;
         int height, width;
         int heightI = 1000;
         int widthI = 1000;
         int leftBound, topBound = 250;
         //final ImageView img = (ImageView) findViewById(R.id.the_guy);
+
+        float actionX;
+        float actionY;
+
+        String heldX = "";
+        String heldY = "";
 
         //img.setFrame(2,2,2,2);
         float x,y=100;
@@ -94,6 +104,14 @@ public class MainActivity extends AppCompatActivity {
             guy.x =100;
             guy.y =100;
 
+            //actionX = canvas.getWidth()/2;
+            //actionY = canvas.getHeight() - 400;
+
+            action = BitmapFactory.decodeResource(getResources(), R.drawable.center_button);
+            up = BitmapFactory.decodeResource(getResources(), R.drawable.up_arrow);
+            down = BitmapFactory.decodeResource(getResources(), R.drawable.down_arrow);
+            left = BitmapFactory.decodeResource(getResources(), R.drawable.left_arrow);
+            right = BitmapFactory.decodeResource(getResources(), R.drawable.right_arrow);
             while(playing){
                 update();
                 draw();
@@ -111,7 +129,8 @@ public class MainActivity extends AppCompatActivity {
             //cx--;
             //}
             //else cy--;
-            touched = false;
+            if(heldY != "")guy.update(heldY);
+            if(heldX != "")guy.update(heldX);
 
             //if(go)guy.update("up");
             //if(!guy.go){
@@ -125,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
                 canvas = ourHolder.lockCanvas();
                 width = canvas.getWidth();
                 height = canvas.getHeight();
-
                 int ex = 0;
                 int why = 0;
                 //while(why < height){
@@ -137,18 +155,22 @@ public class MainActivity extends AppCompatActivity {
                     //why+=background.getHeight();
                 //}
                 //canvas.drawBitmap(background,0,0,null);
-                paint.setColor(Color.GREEN);
+                canvas.drawColor(Color.WHITE);
                 //canvas.drawLine(0,0,300,300, paint);
                 //canvas.drawCircle(x,y,100,paint);
                 guy.width = width;
                 guy.height = height;
                 guy.draw(canvas, paint);
 
-
                 //canvas.drawLine(500,500,700,700,paint);
                 //canvas.drawCircle(cx, cy,50,paint);
-
-
+                actionX = canvas.getWidth()/2;
+                actionY = canvas.getHeight() - 400;
+                canvas.drawBitmap(action, actionX, actionY, null);
+                canvas.drawBitmap(up, actionX, actionY - 200, null);
+                canvas.drawBitmap(down, actionX, actionY + 200, null);
+                canvas.drawBitmap(left, actionX - 200, actionY, null);
+                canvas.drawBitmap(right, actionX + 200, actionY, null);
 
 
 
@@ -173,38 +195,64 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public boolean onTouchEvent(MotionEvent motionEvent){
+            int xtuch = (int) motionEvent.getX();
+            int ytuch = (int) motionEvent.getY();
 
             if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                int xtuch = (int) motionEvent.getX();
-                int ytuch = (int) motionEvent.getY();
-                //if (xtuch > hey.x - 30 && xtuch < hey.x + hey.bitmap1.getWidth() +30 && ytuch > hey.y -30 && ytuch < hey.y + hey.bitmap1.getHeight() +30) {
-                //    hey.dy = -50;
-                //}
-                startX = xtuch;
-                startY = ytuch;
-                drawLine = false;
-                //bonk.onTouchEvent(motionEvent, this.getContext());
-
-
-
-            }
-            else if(motionEvent.getAction() == MotionEvent.ACTION_UP || motionEvent.getAction() == MotionEvent.ACTION_HOVER_MOVE) {
-                int xtuch = (int) motionEvent.getX();
-                int ytuch = (int) motionEvent.getY();
-                endX = xtuch;
-                endY = ytuch;
-                drawLine = true;
-                go = true;
-            }
-            else if(motionEvent.getAction() == MotionEvent.ACTION_MOVE){
-                //bonk.onTouchEvent(motionEvent, this.getContext());
-                /*if(teeest){
-                    hey.curFrame = 0;
+                if (xtuch >= actionX && xtuch < actionX + action.getWidth() && ytuch >= actionY && ytuch < actionY + action.getHeight()) {
+                    if(guy.x == 100) guy.x = 400;
+                    else guy.x = 100;
                 }
-                else{
-                    hey.curFrame = 1;
-                }*/
-                //teeest = !teeest;
+                if (xtuch >= actionX && xtuch < actionX + action.getWidth() && ytuch >= actionY -200 && ytuch < actionY -200 + action.getHeight()) {
+                    heldY = "up";
+                }
+                if (xtuch >= actionX && xtuch < actionX + action.getWidth() && ytuch >= actionY + 200 && ytuch < actionY + 200 + action.getHeight()) {
+                    heldY = "down";
+                }
+
+                if (xtuch >= actionX -200 && xtuch < actionX -200 + action.getWidth() && ytuch >= actionY && ytuch < actionY + action.getHeight()) {
+                    heldX = "left";
+                }
+
+                if (xtuch >= actionX +200 && xtuch < actionX + 200 + action.getWidth() && ytuch >= actionY && ytuch < actionY + action.getHeight()) {
+                    heldX = "right";
+                }
+            }
+
+
+            if(motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
+                if (xtuch >= actionX && xtuch < actionX + action.getWidth() && ytuch >= actionY && ytuch < actionY + action.getHeight()) {
+                    if(guy.x == 100) guy.x = 400;
+                    else guy.x = 100;
+                }
+
+                if (xtuch >= actionX && xtuch < actionX + action.getWidth() && ytuch >= actionY -200 && ytuch < actionY -200 + action.getHeight()) {
+                    //guy.update("up");
+                    heldY = "up";
+                }
+
+                else if (xtuch >= actionX && xtuch < actionX + action.getWidth() && ytuch >= actionY + 200 && ytuch < actionY + 200 + action.getHeight()) {
+                    //guy.update("down");
+                    heldY = "down";
+                }
+
+                else heldY = "";
+
+                if (xtuch >= actionX -200 && xtuch < actionX - 200 + action.getWidth() && ytuch >= actionY && ytuch < actionY + action.getHeight()) {
+                    heldX = "left";
+                }
+
+                else if (xtuch >= actionX + 200&& xtuch < actionX + 200 + action.getWidth() && ytuch >= actionY && ytuch < actionY + action.getHeight()) {
+                    heldX = "right";
+                }
+
+                else heldX = "";
+            }
+
+
+            if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                heldX = "";
+                heldY = "";
             }
             return true;
         }
