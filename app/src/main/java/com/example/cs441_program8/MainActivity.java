@@ -1,6 +1,7 @@
 package com.example.cs441_program8;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         int widthI = 1000;
         int leftBound, topBound = 250;
         //final ImageView img = (ImageView) findViewById(R.id.the_guy);
-
+        int flag = 0;
         float actionX;
         float actionY;
 
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         //img.setFrame(2,2,2,2);
         float x,y=100;
-        Bitmap background = BitmapFactory.decodeResource(this.getResources(), R.drawable.test_boy) ;
+        Bitmap background = BitmapFactory.decodeResource(this.getResources(), R.drawable.area) ;
         float startX, startY, endX, endY = 100;
         boolean drawLine = false;
 
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         Rect rect = new Rect(100,100,300,300);
 
         the_guy guy;
+        bad_guy bad;
         boolean go  = false;
         boolean teeest = false;
 
@@ -104,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
             guy.x =100;
             guy.y =100;
 
+            bad = new bad_guy(this.getContext(), 400, 400);
+            bad.x = 400;
+            bad.y = 400;
+
             //actionX = canvas.getWidth()/2;
             //actionY = canvas.getHeight() - 400;
 
@@ -129,8 +135,17 @@ public class MainActivity extends AppCompatActivity {
             //cx--;
             //}
             //else cy--;
+            if( ((guy.x > bad.x && guy.x <= bad.x + bad.bitmap1.getWidth()) || ((guy.x+guy.bitmap1.getWidth() > bad.x && guy.x+guy.bitmap1.getWidth() <= bad.x + bad.bitmap1.getWidth()) )) && ((guy.y > bad.y && guy.y <= bad.y + bad.bitmap1.getHeight() ) || (guy.y+guy.bitmap1.getHeight() > bad.y && guy.y+guy.bitmap1.getHeight() <= bad.y + bad.bitmap1.getHeight() ))) flag = 1;
+            else if(flag == 1) flag = 0;
+            if(flag == 1){
+                Intent intent = new Intent(MainActivity.this, TitleActivity.class);
+                intent.putExtra("x-coor", guy.x);
+                intent.putExtra("y-coor", guy.y);
+                startActivity(new Intent(MainActivity.this, TitleActivity.class));
+            }
             if(heldY != "")guy.update(heldY);
             if(heldX != "")guy.update(heldX);
+
 
             //if(go)guy.update("up");
             //if(!guy.go){
@@ -155,16 +170,18 @@ public class MainActivity extends AppCompatActivity {
                     //why+=background.getHeight();
                 //}
                 //canvas.drawBitmap(background,0,0,null);
-                canvas.drawColor(Color.WHITE);
+                if(flag == 0)canvas.drawColor(Color.WHITE);
+                else canvas.drawColor(Color.RED);
+                canvas.drawBitmap(background, 0,0, null);
                 //canvas.drawLine(0,0,300,300, paint);
                 //canvas.drawCircle(x,y,100,paint);
                 guy.width = width;
                 guy.height = height;
                 guy.draw(canvas, paint);
-
+                bad.draw(canvas, paint);
                 //canvas.drawLine(500,500,700,700,paint);
                 //canvas.drawCircle(cx, cy,50,paint);
-                actionX = canvas.getWidth()/2;
+                actionX = canvas.getWidth()/2 - action.getWidth()/2;
                 actionY = canvas.getHeight() - 400;
                 canvas.drawBitmap(action, actionX, actionY, null);
                 canvas.drawBitmap(up, actionX, actionY - 200, null);
