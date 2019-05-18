@@ -27,6 +27,9 @@ public class bad_guy {
     int numFrames = 2;
     boolean go = true;
 
+
+    int health = 20;
+    int power = 5;
     public bad_guy(Context context, float centerX, float screenHeight){
         bitmap1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.evil_thing) ;
         //up = BitmapFactory.decodeResource(context.getResources(), R.drawable.up_arrow);

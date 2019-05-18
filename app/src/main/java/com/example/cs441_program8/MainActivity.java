@@ -36,9 +36,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //ConstraintLayout parent = (ConstraintLayout)findViewById(R.id.constraintLayout);
-        myView = new MyView(this);
+        myView = new MyView(this, getIntent());
         //parent.addView(myView,0);
+
+
         setContentView(myView);
+
 
 
     }
@@ -60,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
         int flag = 0;
         float actionX;
         float actionY;
+        float coorx;
+        float coory;
+        float badx;
+        float bady;
 
         String heldX = "";
         String heldY = "";
@@ -88,23 +95,29 @@ public class MainActivity extends AppCompatActivity {
         TextView hiscore = new TextView(getContext());
         int scoreint = 0;
         int hiscoreint = 0;
+        boolean done = false;
+        Intent intento;
 
 
 
         private long thisTimeFrame;
-        public MyView(Context context){
+        public MyView(Context context, Intent i){
             super(context);
+            intento = i;
             ourHolder = getHolder();
             paint = new Paint();
             //paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(20);
             paint.setStyle(Paint.Style.STROKE);
+            if(getIntent().hasExtra("done")) done = true;
         }
         @Override
         public void run(){
             guy = new the_guy(this.getContext(), 400, 400);
-            guy.x =100;
-            guy.y =100;
+            if(intento.hasExtra("xcoor"))guy.x = getIntent().getExtras().getFloat("xcoor");
+            else guy.x = 100;
+            if(intento.hasExtra("ycoor"))guy.y = getIntent().getExtras().getFloat("ycoor");
+            else guy.y = 100;
 
             bad = new bad_guy(this.getContext(), 400, 400);
             bad.x = 400;
@@ -137,11 +150,14 @@ public class MainActivity extends AppCompatActivity {
             //else cy--;
             if( ((guy.x > bad.x && guy.x <= bad.x + bad.bitmap1.getWidth()) || ((guy.x+guy.bitmap1.getWidth() > bad.x && guy.x+guy.bitmap1.getWidth() <= bad.x + bad.bitmap1.getWidth()) )) && ((guy.y > bad.y && guy.y <= bad.y + bad.bitmap1.getHeight() ) || (guy.y+guy.bitmap1.getHeight() > bad.y && guy.y+guy.bitmap1.getHeight() <= bad.y + bad.bitmap1.getHeight() ))) flag = 1;
             else if(flag == 1) flag = 0;
-            if(flag == 1){
+            if(!done && flag == 1){
                 Intent intent = new Intent(MainActivity.this, TitleActivity.class);
-                intent.putExtra("x-coor", guy.x);
-                intent.putExtra("y-coor", guy.y);
-                startActivity(new Intent(MainActivity.this, TitleActivity.class));
+                float x1 = guy.x;
+                float y1 = guy.y;
+                intent.putExtra("xcoor", x1);
+                intent.putExtra("ycoor", y1);
+
+                startActivity(intent);
             }
             if(heldY != "")guy.update(heldY);
             if(heldX != "")guy.update(heldX);
@@ -178,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 guy.width = width;
                 guy.height = height;
                 guy.draw(canvas, paint);
-                bad.draw(canvas, paint);
+                if(!done)bad.draw(canvas, paint);
                 //canvas.drawLine(500,500,700,700,paint);
                 //canvas.drawCircle(cx, cy,50,paint);
                 actionX = canvas.getWidth()/2 - action.getWidth()/2;
@@ -208,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
             gameThread = new Thread(this);
             gameThread.start();
         }
+
 
 
         @Override
@@ -294,5 +311,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState){
+        savedInstanceState.putFloat("coorx", 500);
+        savedInstanceState.putFloat("coory", 500);
+        super.onSaveInstanceState(savedInstanceState);
     }
 }

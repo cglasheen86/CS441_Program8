@@ -1,0 +1,130 @@
+commit 17c52ca2496d917f92c2ded36d2d2bd52e1bc418
+Merge: 3ef3c7e f0e5c58
+Author: cglasheen86 <cglasheen86@gmail.com>
+Date:   Tue May 14 00:44:09 2019 -0400
+
+    Merge branch 'master' of https://github.com/cglasheen86/CS441_Program8
+
+commit 3ef3c7e483499d12ee315d5f1b1ad88253f3aefb
+Author: cglasheen86 <cglasheen86@gmail.com>
+Date:   Tue May 14 00:42:51 2019 -0400
+
+    Added enemy graphic/view and background
+
+ .../com/example/cs441_program8/MainActivity.java   |  27 ++++++--
+ .../com/example/cs441_program8/TitleActivity.java  |  17 +++++
+ .../java/com/example/cs441_program8/bad_guy.java   |  74 +++++++++++++++++++++
+ app/src/main/res/drawable/area.png                 | Bin 0 -> 5242 bytes
+ app/src/main/res/drawable/area2.png                | Bin 0 -> 13580 bytes
+ app/src/main/res/drawable/evil_thing.png           | Bin 0 -> 855 bytes
+ app/src/main/res/drawable/test_boy.png             | Bin 724 -> 642 bytes
+ app/src/main/res/drawable/title.png                | Bin 0 -> 14012 bytes
+ 8 files changed, 113 insertions(+), 5 deletions(-)
+
+commit f0e5c58d1de6db720f297490b8edc6ed9e8d8e8b
+Author: cglasheen86 <32963856+cglasheen86@users.noreply.github.com>
+Date:   Tue May 14 00:42:06 2019 -0400
+
+    Update README.md
+
+ README.md | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit 9f46fd8cab23a67f05552ac6c1579a32e283ec4f
+Author: cglasheen86 <cglasheen86@gmail.com>
+Date:   Sat May 11 11:59:39 2019 -0400
+
+    Added Movement
+
+ app/src/main/AndroidManifest.xml                   |   1 +
+ .../com/example/cs441_program8/MainActivity.java   | 114 +++++++++++++++------
+ .../com/example/cs441_program8/TitleActivity.java  |  13 +++
+ .../java/com/example/cs441_program8/the_guy.java   |  38 +++----
+ app/src/main/res/layout/activity_main.xml          |   4 +-
+ app/src/main/res/layout/activity_title.xml         |   9 ++
+ app/src/main/res/values/styles.xml                 |   2 +-
+ 7 files changed, 126 insertions(+), 55 deletions(-)
+
+commit b58bc647d1ca5f739132e591955c8c315e03ee99
+Author: cglasheen86 <cglasheen86@gmail.com>
+Date:   Fri May 10 23:15:11 2019 -0400
+
+    Working on buttons
+
+ .../com/example/cs441_program8/MainActivity.java   |  14 +++--------
+ .../java/com/example/cs441_program8/the_guy.java   |  27 ++++++++++++++++-----
+ app/src/main/res/drawable/center_button.png        | Bin 0 -> 481 bytes
+ app/src/main/res/drawable/down_arrow.png           | Bin 0 -> 418 bytes
+ app/src/main/res/drawable/left_arrow.png           | Bin 0 -> 435 bytes
+ app/src/main/res/drawable/right_arrow.png          | Bin 0 -> 425 bytes
+ app/src/main/res/drawable/up_arrow.png             | Bin 0 -> 717 bytes
+ 7 files changed, 24 insertions(+), 17 deletions(-)
+
+commit d3dd209333ecc17f44e1c0580231d4fd82560173
+Author: cglasheen86 <cglasheen86@gmail.com>
+Date:   Thu May 9 23:37:07 2019 -0400
+
+    Created View
+
+ .gitignore                                         |  13 ++
+ .idea/codeStyles/Project.xml                       |  29 +++
+ .idea/gradle.xml                                   |  15 ++
+ .idea/misc.xml                                     |   9 +
+ .idea/runConfigurations.xml                        |  12 +
+ .idea/vcs.xml                                      |   6 +
+ app/.gitignore                                     |   1 +
+ app/build.gradle                                   |  29 +++
+ app/proguard-rules.pro                             |  21 ++
+ .../cs441_program8/ExampleInstrumentedTest.java    |  26 +++
+ app/src/main/AndroidManifest.xml                   |  24 ++
+ .../com/example/cs441_program8/MainActivity.java   | 241 +++++++++++++++++++++
+ .../java/com/example/cs441_program8/the_guy.java   |  59 +++++
+ .../res/drawable-v24/ic_launcher_foreground.xml    |  34 +++
+ .../main/res/drawable/ic_launcher_background.xml   | 170 +++++++++++++++
+ app/src/main/res/drawable/test_boy.png             | Bin 0 -> 724 bytes
+ app/src/main/res/layout/activity_main.xml          | 101 +++++++++
+ app/src/main/res/layout/content_main.xml           |  17 ++
+ app/src/main/res/menu/menu_main.xml                |  10 +
+ app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml |   5 +
+ .../res/mipmap-anydpi-v26/ic_launcher_round.xml    |   5 +
+ app/src/main/res/mipmap-hdpi/ic_launcher.png       | Bin 0 -> 2963 bytes
+ app/src/main/res/mipmap-hdpi/ic_launcher_round.png | Bin 0 -> 4905 bytes
+ app/src/main/res/mipmap-mdpi/ic_launcher.png       | Bin 0 -> 2060 bytes
+ app/src/main/res/mipmap-mdpi/ic_launcher_round.png | Bin 0 -> 2783 bytes
+ app/src/main/res/mipmap-xhdpi/ic_launcher.png      | Bin 0 -> 4490 bytes
+ .../main/res/mipmap-xhdpi/ic_launcher_round.png    | Bin 0 -> 6895 bytes
+ app/src/main/res/mipmap-xxhdpi/ic_launcher.png     | Bin 0 -> 6387 bytes
+ .../main/res/mipmap-xxhdpi/ic_launcher_round.png   | Bin 0 -> 10413 bytes
+ app/src/main/res/mipmap-xxxhdpi/ic_launcher.png    | Bin 0 -> 9128 bytes
+ .../main/res/mipmap-xxxhdpi/ic_launcher_round.png  | Bin 0 -> 15132 bytes
+ app/src/main/res/values/colors.xml                 |   6 +
+ app/src/main/res/values/dimens.xml                 |   3 +
+ app/src/main/res/values/strings.xml                |   4 +
+ app/src/main/res/values/styles.xml                 |  20 ++
+ .../example/cs441_program8/ExampleUnitTest.java    |  17 ++
+ build.gradle                                       |  27 +++
+ gradle.properties                                  |  15 ++
+ gradle/wrapper/gradle-wrapper.jar                  | Bin 0 -> 54329 bytes
+ gradle/wrapper/gradle-wrapper.properties           |   6 +
+ gradlew                                            | 172 +++++++++++++++
+ gradlew.bat                                        |  84 +++++++
+ settings.gradle                                    |   1 +
+ 43 files changed, 1182 insertions(+)
+
+commit ea0567c2abc332db2c146c3658ec52ed6404647d
+Author: cglasheen86 <32963856+cglasheen86@users.noreply.github.com>
+Date:   Fri May 3 23:53:09 2019 -0400
+
+    Update README.md
+
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 330152e3b1f16181256c375c450424ea80b4e6b5
+Author: cglasheen86 <32963856+cglasheen86@users.noreply.github.com>
+Date:   Fri May 3 23:48:12 2019 -0400
+
+    Initial commit
+
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)

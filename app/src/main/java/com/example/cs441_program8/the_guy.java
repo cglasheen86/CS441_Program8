@@ -26,6 +26,7 @@ public class the_guy {
     int curFrame = 0;
     int numFrames = 2;
     boolean go = true;
+    int id;
 
     public the_guy(Context context, float centerX, float screenHeight){
         bitmap1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.test_boy) ;
