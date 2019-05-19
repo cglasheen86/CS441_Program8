@@ -27,6 +27,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
 
    MyView myView;
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         boolean done = false;
         Intent intento;
 
-
+        int health;
 
         private long thisTimeFrame;
         public MyView(Context context, Intent i){
@@ -108,7 +110,9 @@ public class MainActivity extends AppCompatActivity {
             paint = new Paint();
             //paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(20);
-            paint.setStyle(Paint.Style.STROKE);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setTextSize(50);
+            paint.setColor(Color.WHITE);
             if(getIntent().hasExtra("done")) done = true;
         }
         @Override
@@ -118,11 +122,15 @@ public class MainActivity extends AppCompatActivity {
             else guy.x = 100;
             if(intento.hasExtra("ycoor"))guy.y = getIntent().getExtras().getFloat("ycoor");
             else guy.y = 100;
+            if(intento.hasExtra("health")) health = getIntent().getExtras().getInt("health");
+            else health = 100;
 
             bad = new bad_guy(this.getContext(), 400, 400);
+            //bad.x = new Random().nextInt(width);
+            //bad.y = new Random().nextInt(height);
+            //bad.y = r.nextInt((canvas.getHeight() - bad.bitmap1.getHeight()) + 1);
             bad.x = 400;
             bad.y = 400;
-
             //actionX = canvas.getWidth()/2;
             //actionY = canvas.getHeight() - 400;
 
@@ -156,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 float y1 = guy.y;
                 intent.putExtra("xcoor", x1);
                 intent.putExtra("ycoor", y1);
-
+                intent.putExtra("health", health);
                 startActivity(intent);
             }
             if(heldY != "")guy.update(heldY);
@@ -173,8 +181,8 @@ public class MainActivity extends AppCompatActivity {
         public void draw(){
             if(ourHolder.getSurface().isValid()){
                 canvas = ourHolder.lockCanvas();
-                width = canvas.getWidth();
-                height = canvas.getHeight();
+                //width = canvas.getWidth();
+                //height = canvas.getHeight();
                 int ex = 0;
                 int why = 0;
                 //while(why < height){
@@ -204,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
                 canvas.drawBitmap(down, actionX, actionY + 200, null);
                 canvas.drawBitmap(left, actionX - 200, actionY, null);
                 canvas.drawBitmap(right, actionX + 200, actionY, null);
-
+                canvas.drawText(String.valueOf(health),20,60,paint);
 
 
 
